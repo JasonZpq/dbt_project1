@@ -1,0 +1,43 @@
+sources:
+  - name: tpch
+    description: "TPC-H benchmark dataset containing sample data for order processing and customer management"
+    database: snowflake_sample_data
+    schema: tpch_sf1
+    tables:
+      - name: customer
+        description: "Customer information including customer details and demographics"
+        identifier: customer
+      - name: orders
+        description: "Order header information including order dates, status, and customer references"
+        columns:
+          - name: o_orderkey
+            description: "Primary key for orders table - unique order identifier"
+            tests:
+              - not_null
+              - unique
+        identifier: orders
+      - name: lineitem
+        description: "Order line items containing product details, quantities, and pricing information"
+        columns:
+          - name: l_orderkey
+            description: "Foreign key reference to orders table - links line items to their parent order"
+            tests:
+              - relationships:
+                  to: source('tpch', 'orders')
+                  field: o_orderkey
+        identifier: lineitem
+      - name: nation
+        description: "Nation/country reference data for customer and supplier locations"
+        identifier: nation
+      - name: part
+        description: "Product/part catalog containing item details and specifications"
+        identifier: part
+      - name: partsupp
+        description: "Part supplier relationships and inventory information"
+        identifier: partsupp
+      - name: region
+        description: "Geographic region reference data"
+        identifier: region
+      - name: supplier
+        description: "Supplier information and contact details"
+        identifier: supplier

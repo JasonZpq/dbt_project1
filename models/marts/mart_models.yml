@@ -1,0 +1,60 @@
+models:
+  - name: fct_orders
+    description: "Fact table containing order-level metrics and aggregated sales data"
+    columns:
+      - name: order_key
+        description: "Primary key - unique identifier for each order"
+        tests:
+          - not_null
+          - unique
+      - name: order_date
+        description: "Date when the order was placed"
+        tests:
+          - not_null
+      - name: order_status
+        description: "Current status of the order (P=Pending, O=Open, F=Filled)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['P', 'O', 'F']
+      - name: customer_key
+        description: "Foreign key reference to customer table"
+        tests:
+          - not_null
+      - name: gross_item_sales_amount
+        description: "Total gross sales amount for the order before discounts"
+        tests:
+          - not_null
+      - name: items_discounted_amount
+        description: "Total discount amount applied to the order"
+
+  - name: int_order_items
+    description: "Intermediate table aggregating order line items by order"
+    columns:
+      - name: order_key
+        description: "Foreign key reference to orders table"
+        tests:
+          - not_null
+      - name: total_quantity
+        description: "Total quantity of items in the order"
+        tests:
+          - not_null
+      - name: total_amount
+        description: "Total amount for the order before discounts"
+        tests:
+          - not_null
+
+  - name: int_order_items_summary
+    description: "Summary table with order-level aggregations for fact table"
+    columns:
+      - name: order_key
+        description: "Primary key - unique order identifier"
+        tests:
+          - not_null
+          - unique
+      - name: gross_item_sales_amount
+        description: "Aggregated gross sales amount for the order"
+        tests:
+          - not_null
+      - name: items_discounted_amount
+        description: "Aggregated discount amount for the order" 
