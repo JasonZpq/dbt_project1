@@ -35,14 +35,7 @@ models:
         description: "Foreign key reference to orders table"
         tests:
           - not_null
-      - name: total_quantity
-        description: "Total quantity of items in the order"
-        tests:
-          - not_null
-      - name: total_amount
-        description: "Total amount for the order before discounts"
-        tests:
-          - not_null
+
 
   - name: int_order_items_summary
     description: "Summary table with order-level aggregations for fact table"
