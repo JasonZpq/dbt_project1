@@ -1,0 +1,47 @@
+version: 2
+
+snapshots:
+  - name: lineitem_snapshot
+    description: "Snapshot of lineitem table to track all column changes with 9999-12-31 as end date for current records"
+    relation: source('dbt_db', 'lineitem_test')
+    config:
+      schema: snapshots
+      database: dbt_db
+      unique_key: "l_orderkey || l_linenumber"
+      strategy: check
+      check_cols: all
+      hard_deletes: new_record
+      dbt_valid_to_current: "to_date('9999-12-31')"
+    columns:
+      - name: l_orderkey
+        description: "Order key - part of unique key"
+      - name: l_partkey
+        description: "Part key reference"
+      - name: l_suppkey
+        description: "Supplier key reference"
+      - name: l_linenumber
+        description: "Line number - part of unique key"
+      - name: l_quantity
+        description: "Quantity ordered"
+      - name: l_extendedprice
+        description: "Extended price"
+      - name: l_discount
+        description: "Discount percentage"
+      - name: l_tax
+        description: "Tax amount"
+      - name: l_returnflag
+        description: "Return flag"
+      - name: l_linestatus
+        description: "Line status"
+      - name: l_shipdate
+        description: "Ship date"
+      - name: l_commitdate
+        description: "Commit date"
+      - name: l_receiptdate
+        description: "Receipt date"
+      - name: l_shipinstruct
+        description: "Ship instructions"
+      - name: l_shipmode
+        description: "Ship mode"
+      - name: l_comment
+        description: "Comment field" 
