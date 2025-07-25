@@ -45,3 +45,15 @@ snapshots:
         description: "Ship mode"
       - name: l_comment
         description: "Comment field" 
+      - name: l_priority
+        description: "Priority field"
+      - name: dbt_scd_id
+        description: "Unique identifier for each snapshot record, used for change tracking"
+      - name: dbt_updated_at
+        description: "Timestamp when this snapshot was processed by dbt"
+      - name: dbt_valid_from
+        description: "Timestamp when this version of the row became valid"
+      - name: dbt_valid_to
+        description: "Timestamp when this version of the row became invalid (9999-12-31 for current records)" 
+      - name: dbt_is_deleted
+        description: "Flag indicating if this row has been deleted"
